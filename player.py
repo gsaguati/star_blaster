@@ -17,5 +17,5 @@ class Player:
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
-       # pygame.draw.rect(screen, (0, 255, 0), self.rect )
+        #pygame.draw.rect(screen, (0, 255, 0), self.rect )
 
