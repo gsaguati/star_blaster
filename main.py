@@ -1,8 +1,8 @@
 import pygame
 from player import Player
 pygame.init()
-
-nave = Player(200, 500)
+nave_img = pygame.image.load("assets//img//nave1.png")
+nave = Player(200, 500, nave_img)
 
 screen_width = 450
 screen_height = 600

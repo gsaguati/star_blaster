@@ -1,8 +1,10 @@
 import pygame
 
 class Player:
-    def __init__(self, x, y):
-        self.rect = pygame.Rect(x, y, 30, 30)
+    def __init__(self, x, y, image):
+        self.image = image 
+        
+        self.rect = pygame.Rect(x, y, 33, 33)
         self.speed = 6
 
     def movimiento(self, keys, screen_width):
@@ -14,4 +16,6 @@ class Player:
             self.rect.x += self.speed
 
     def draw(self, screen):
-        pygame.draw.rect(screen, (0, 255, 0), self.rect)
+        screen.blit(self.image, self.rect)
+       # pygame.draw.rect(screen, (0, 255, 0), self.rect )
+
