@@ -9,4 +9,4 @@ class Bala:
         self.rect.y -= self.speed
 
     def draw(self, screen):
-        pygame.draw.rect(screen, (255, 255, 0), self.rect)
+        pygame.draw.rect(screen, (255, 0, 0), self.rect)

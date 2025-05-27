@@ -12,8 +12,8 @@ ventana = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Star Blaster")
 
 balas = []
-bala_delay = 300  # milisegundos entre disparos
-ultima_bala = pygame.time.get_ticks()  # inicializamos fuera del bucle
+bala_delay = 300  
+ultima_bala = pygame.time.get_ticks()  
 
 run = True
 while run:
