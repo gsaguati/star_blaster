@@ -6,6 +6,7 @@ class Player:
         
         self.rect = pygame.Rect(x, y, 33, 33)
         self.speed = 6
+        self.vidas = 3
 
     def movimiento(self, keys, width):
      if keys[pygame.K_LEFT]:

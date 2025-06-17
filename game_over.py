@@ -3,14 +3,14 @@ import sys
 import juego
 import os
 
-def menu_principal():
+def game_over():
+    import menu
     pygame.init()
     ventana = pygame.display.set_mode((450, 600))
-    pygame.display.set_caption("Star Blaster")
+    pygame.display.set_caption("Star Blaster - Game Over")
 
     frames_fondo = []
     fondo = "assets/img/split"  
-
     archivos = sorted(os.listdir(fondo))
     for archivo in archivos:
         if archivo.endswith(".jpg") and "frame" in archivo:
@@ -24,11 +24,11 @@ def menu_principal():
     reloj = pygame.time.Clock()
 
     fuente = pygame.font.Font("assets/font/KarmaticArcade-6Yrp1.ttf", 36)
-    texto = fuente.render("Star Blaster", True, (255, 255, 255))
+    texto = fuente.render("GAME OVER", True, (255, 255, 255))
     texto_rect = texto.get_rect(center=(225, 100))
 
     boton_rect = pygame.Rect(150, 225, 150, 50)
-    texto_boton = fuente.render("JUGAR", True, (255, 255, 255))  
+    texto_boton = fuente.render("VOLVER A JUGAR", True, (255, 255, 255))  
     texto_rect1 = texto_boton.get_rect(center=boton_rect.center)
 
     boton_rect2 = pygame.Rect(150, 325, 150, 50)
@@ -72,6 +72,3 @@ def menu_principal():
         reloj.tick(fps_animacion) 
 
     pygame.quit()
-    
-if __name__ == "__main__":
-    menu_principal()

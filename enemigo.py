@@ -16,4 +16,4 @@ class Enemigo:
 
     def draw(self, pantalla):
         pantalla.blit(self.imagen, self.rect)
-        pygame.draw.rect(pantalla, (0, 0, 255), self.rect)  
+        #pygame.draw.rect(pantalla, (0, 0, 255), self.rect)  
