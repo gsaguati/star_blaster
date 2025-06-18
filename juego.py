@@ -7,13 +7,18 @@ from enemigo2 import Enemigo2
 from bala_enemiga import BalaEnemiga
 import random
 import game_over
+import score 
 
-def jugar():
+
+def jugar(nombre):
     pygame.init()
     width = 450
     height = 600
     ventana = pygame.display.set_mode((width, height))
     pygame.display.set_caption("Star Blaster")
+    pygame.mixer.music.load("assets/sonidos/base2.mp3")
+    pygame.mixer.music.set_volume(0.2)
+    pygame.mixer.music.play(-1)
 
     frames_fondo = []
     fondo = "assets/img/split"
@@ -33,6 +38,14 @@ def jugar():
     enemigo_img = pygame.image.load("assets/img/enemigo.png")
     enemigo2_img = pygame.image.load("assets/img/enemigo_2.png") 
     nave_mini = pygame.transform.scale(nave_img, (25, 25))
+    sonido_disparo = pygame.mixer.Sound("assets/sonidos/bala.wav")
+    sonido_disparo.set_volume(0.5)
+    sonido_enemigo = pygame.mixer.Sound("assets/sonidos/enemigo.wav")
+    sonido_enemigo.set_volume(0.5)
+    sonido_enemigo2 = pygame.mixer.Sound("assets/sonidos/enemigo2.wav")
+    sonido_enemigo2.set_volume(0.5)
+    
+
 
     nave = Player(200, 500, nave_img)
     balas = []
@@ -67,11 +80,12 @@ def jugar():
             if ahora - ultima_bala > bala_delay:
                 bala = Bala(nave.rect.centerx - 2, nave.rect.top)
                 balas.append(bala)
+                sonido_disparo.play()
                 ultima_bala = ahora
 
         # Enemigo 1
         if ahora - tiempo_oleada > intervalo_oleada:
-            cantidad_enemigos = random.randint(2, 5)
+            cantidad_enemigos = random.randint(3, 6)
             for i in range(cantidad_enemigos):
                 x = random.randint(30, width - 70)
                 y = random.randint(-20, 10)
@@ -94,25 +108,20 @@ def jugar():
 
         nave.draw(ventana)
 
-        
         vidas_y = height - nave_mini.get_height() - 10
         for i in range(nave.vidas):
             x = 10 + i * 30
             ventana.blit(nave_mini, (x, vidas_y))
 
-        
         for bala in balas[:]:
             bala.movimiento()
             bala.draw(ventana)
             if bala.rect.bottom < 0:
                 balas.remove(bala)
 
-       
         for enemigo in enemigos[:]:
             enemigo.mover(width)
             enemigo.draw(ventana)
-
-
             if enemigo.rect.colliderect(nave.rect) or enemigo.rect.top > nave.rect.bottom:
                 enemigos.remove(enemigo)
                 nave.vidas -= 1
@@ -124,15 +133,13 @@ def jugar():
                 if bala.rect.colliderect(enemigo.rect):
                     enemigos.remove(enemigo)
                     balas.remove(bala)
+                    sonido_enemigo.play()
                     puntaje += 100
                     break
-
 
         for enemigo in enemigos2[:]:
             enemigo.mover(width)
             enemigo.draw(ventana)
-
-
             if enemigo.rect.colliderect(nave.rect) or enemigo.rect.top > nave.rect.bottom:
                 enemigos2.remove(enemigo)
                 nave.vidas -= 1
@@ -149,9 +156,9 @@ def jugar():
                 if bala.rect.colliderect(enemigo.rect):
                     enemigos2.remove(enemigo)
                     balas.remove(bala)
+                    sonido_enemigo2.play()
                     puntaje += 250
                     break
-
 
         for bala in balas_enemigas[:]:
             bala.movimiento()
@@ -170,7 +177,8 @@ def jugar():
         pygame.display.update()
         reloj.tick(fps_animacion)
 
-    # Game Over
     if nave.vidas <= 0:
-     game_over.game_over()
-    return
+        score.guardar_puntaje(nombre, puntaje)
+        game_over.game_over(nombre)
+
+    return puntaje

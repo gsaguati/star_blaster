@@ -2,11 +2,17 @@ import pygame
 import sys
 import juego
 import os
+import nombre
+import score
 
 def menu_principal():
     pygame.init()
     ventana = pygame.display.set_mode((450, 600))
     pygame.display.set_caption("Star Blaster")
+    pygame.mixer.music.load("assets/sonidos/base2.mp3")
+    pygame.mixer.music.set_volume(0.2)
+    pygame.mixer.music.play(-1)
+
 
     frames_fondo = []
     fondo = "assets/img/split"  
@@ -39,6 +45,8 @@ def menu_principal():
     texto_boton3 = fuente.render("SALIR", True, (255, 255, 255))
     texto_rect3 = texto_boton3.get_rect(center=boton_rect4.center)
 
+    score.crear_base_datos()
+
     run = True
     while run:
         mouse = pygame.mouse.get_pos()
@@ -57,13 +65,18 @@ def menu_principal():
         ventana.blit(texto_boton3, texto_rect3)
 
         if boton_rect.collidepoint(mouse) and clic[0]:
-            pygame.quit()
-            juego.jugar()
-            sys.exit()
+            nombre_jugador = nombre.ingresar_nombre()
+            if nombre_jugador:
+                puntaje = juego.jugar(nombre_jugador)
+                score.guardar_puntaje(nombre_jugador, puntaje)
+                sys.exit()
+
         if boton_rect2.collidepoint(mouse) and clic[0]:
-            pygame.quit()
-            # score.score()
-            sys.exit()
+          pygame.quit()
+          score.mostrar_pantalla_scores()
+          sys.exit()
+
+
         if boton_rect4.collidepoint(mouse) and clic[0]:
             pygame.quit()
             sys.exit()
@@ -72,6 +85,5 @@ def menu_principal():
         reloj.tick(fps_animacion) 
 
     pygame.quit()
-    
 if __name__ == "__main__":
     menu_principal()
