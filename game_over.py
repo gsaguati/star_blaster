@@ -2,12 +2,17 @@ import pygame
 import sys
 import juego
 import os
+import score
+import menu
 
-def game_over():
-    import menu
+def game_over(nombre_jugador):
     pygame.init()
     ventana = pygame.display.set_mode((450, 600))
     pygame.display.set_caption("Star Blaster - Game Over")
+    pygame.mixer.music.load("assets/sonidos/base2.mp3")
+    pygame.mixer.music.set_volume(0.2)
+    pygame.mixer.music.play(-1)
+
 
     frames_fondo = []
     fondo = "assets/img/split"  
@@ -27,12 +32,12 @@ def game_over():
     texto = fuente.render("GAME OVER", True, (255, 255, 255))
     texto_rect = texto.get_rect(center=(225, 100))
 
-    boton_rect = pygame.Rect(150, 225, 150, 50)
+    boton_rect = pygame.Rect(100, 225, 250, 50)
     texto_boton = fuente.render("VOLVER A JUGAR", True, (255, 255, 255))  
     texto_rect1 = texto_boton.get_rect(center=boton_rect.center)
 
     boton_rect2 = pygame.Rect(150, 325, 150, 50)
-    texto_boton2 = fuente.render("SCORE", True, (255, 255, 255))
+    texto_boton2 = fuente.render("MENU", True, (255, 255, 255))
     texto_rect2 = texto_boton2.get_rect(center=boton_rect2.center)  
 
     boton_rect4 = pygame.Rect(150, 425, 150, 50)
@@ -58,12 +63,16 @@ def game_over():
 
         if boton_rect.collidepoint(mouse) and clic[0]:
             pygame.quit()
-            juego.jugar()
+            nuevo_puntaje = juego.jugar(nombre_jugador)
+            if nuevo_puntaje > 0:
+                score.guardar_puntaje(nombre_jugador, nuevo_puntaje)
             sys.exit()
+
         if boton_rect2.collidepoint(mouse) and clic[0]:
             pygame.quit()
-            # score.score()
+            menu.menu_principal()
             sys.exit()
+
         if boton_rect4.collidepoint(mouse) and clic[0]:
             pygame.quit()
             sys.exit()
