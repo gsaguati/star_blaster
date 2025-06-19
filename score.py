@@ -41,7 +41,7 @@ def mostrar_pantalla_scores():
     pygame.mixer.music.play(-1)
 
 
-    # Fondo animado
+  
     frames_fondo = []
     fondo = "assets/img/split"
     archivos = sorted(os.listdir(fondo))
@@ -57,7 +57,7 @@ def mostrar_pantalla_scores():
     fuente_titulo = pygame.font.Font("assets/font/KarmaticArcade-6Yrp1.ttf", 36)
     fuente_score = pygame.font.SysFont(None, 28)
 
-    # Botón volver
+    
     boton_volver = pygame.Rect(150, 520, 150, 40)
     texto_boton = fuente_score.render("VOLVER", True, (255, 255, 255))
     texto_boton_rect = texto_boton.get_rect(center=boton_volver.center)
@@ -76,12 +76,12 @@ def mostrar_pantalla_scores():
         ventana.blit(frames_fondo[indice_frame], (0, 0))
         indice_frame = (indice_frame + 1) % len(frames_fondo)
 
-        # Título
+        
         titulo = fuente_titulo.render("TOP 10 PUNTAJES", True, (255, 255, 255))
         ventana.blit(titulo, (225 - titulo.get_width() // 2, 50))
         ventana.blit(texto_boton, texto_boton_rect)
 
-        # Lista de puntajes
+        
         for i, (nombre, score_val) in enumerate(puntajes):
             texto = fuente_score.render(f"{i+1}. {nombre} - {score_val}", True, (255, 255, 255))
             ventana.blit(texto, (60, 120 + i * 35))
